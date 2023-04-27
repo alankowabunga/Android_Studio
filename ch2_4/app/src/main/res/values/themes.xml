@@ -13,6 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+<<<<<<< HEAD
 
     <style name="Theme.Ch2_4.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -22,4 +23,6 @@
     <style name="Theme.Ch2_4.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Ch2_4.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+=======
+>>>>>>> b6bb174ecf3c5409c25b184c8bbd41448b22b689
 </resources>

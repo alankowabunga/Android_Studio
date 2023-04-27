@@ -7,9 +7,18 @@
     tools:context=".MainActivity">
 
     <TextView
+<<<<<<< HEAD
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
+=======
+        android:id="@+id/output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        android:textColor="#FF0000"
+        android:textSize="24sp"
+>>>>>>> b6bb174ecf3c5409c25b184c8bbd41448b22b689
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
