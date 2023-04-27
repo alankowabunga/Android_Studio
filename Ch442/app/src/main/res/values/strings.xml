@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Ch4-4-2</string>
+    <string name="height">身高(CM):</string>
+    <string name="weight">體重(KG):</string>
+</resources>

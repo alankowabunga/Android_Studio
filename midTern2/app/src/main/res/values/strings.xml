@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Mid_Term_2</string>
+    <string-array name="modes">
+        <item>簡單模式</item>
+        <item>困難模式</item>
+    </string-array>
+
+    <string name="title">猜數字遊戲</string>
+    <string name="submit">送出</string>
+    <string name="restart">重新開始</string>
+</resources>

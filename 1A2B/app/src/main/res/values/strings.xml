@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">1A2B</string>
+
+
+    <string name="title">陳昱任 M1130303</string>
+    <string name="submit">送出</string>
+    <string name="restart">重新開始</string>
+</resources>
