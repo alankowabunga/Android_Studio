@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Ch05-3_textsize</string>
+    <string name="text">Morning Gorgeous</string>
+    <string name="btn0">點擊</string>
+    <string name="btn1">放大</string>
+    <string name="btn2">縮小</string>
+</resources>

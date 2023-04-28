@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Spinner</string>
+    <string-array name="cars">
+        <item>C 250 coupe</item>
+        <item>Q 60</item>
+        <item>430i coupe</item>
+    </string-array>
+</resources>
