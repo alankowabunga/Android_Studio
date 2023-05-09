@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         // 找到畫面中的 View
         submitButton = (Button) findViewById(R.id.submitButton);
         restartButton = (Button) findViewById(R.id.restartButton);
+
         // 輸入的元件、字符序列 editable 、 長度
         inputNumber = (EditText) findViewById(R.id.inputNumber);
         editable = inputNumber.getText();
@@ -60,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Spinner 下拉式選單
         spinner = (Spinner) findViewById(R.id.mySpinner);
+        String[] data = {"簡單模式", "困難模式"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(0);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -69,17 +77,19 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (result) {
                     case "簡單模式":
+                        clearConfig();
                         flag_easy = true;
                         break;
                     case "困難模式":
-
+                        clearConfig();
                         flag_easy = false;
-                        Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+                        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                         startActivity(intent);
 
                         break;
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -90,16 +100,19 @@ public class MainActivity extends AppCompatActivity {
 
         final Context that = this;
 
+        // 是否有輸入重複的數字
+        if (game.getC(editable.toString()) == 0) {
+            correct_input = true;
+        } else {
+            correct_input = false;
+        }
+
         // 設定送出按鈕的點擊事件
         submitButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
 
-                // 確認是否沒有輸入重複的數字
-                if (game.getC(editable.toString()) == 0) {
-                    correct_input = true;
-                }
 
                 // 一定要輸入四個數字才有反應
                 if (inputNumber.getText().length() == 4 && correct_input) { // getText() 方法返回的資料類型是 Editable，這是一個可變的字符序列對象
@@ -109,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // 將使用者輸入的數字跟幾 A 幾 B 放入文字框框中
                     historyInput.setText((inputNumber.getText() + "\n") + historyInput.getText());
-                    historyResult.setText((game.checkAnswer(inputNumber.getText().toString()) + "\n") + historyResult.getText());
+                    historyResult.setText((game.checkNonRepeatedAnswer(inputNumber.getText().toString()) + "\n") + historyResult.getText());
                     // 清空輸入框
                     inputNumber.setText("");
                     // 如果猜中了
@@ -145,11 +158,25 @@ public class MainActivity extends AppCompatActivity {
                 historyResult.setText("");
                 cover.setVisibility(View.INVISIBLE);
                 correct_input = false;
+                flag_easy = false;
                 generateAnswer();
             }
 
         });
     }
+
+    private void clearConfig() {
+        answer_display.setText("");
+        answer_display.setVisibility(View.INVISIBLE);
+        inputNumber.setEnabled(false);
+        inputNumber.setEnabled(true);
+        submitButton.setEnabled(true);
+        historyInput.setText("");
+        historyResult.setText("");
+        cover.setVisibility(View.INVISIBLE);
+        flag_easy = false;
+    }
+
     // 生成簡單模式的答案
     private void generateAnswer() {
         if (flag_easy) {
@@ -164,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
 
     }
+
     // menu 操作
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

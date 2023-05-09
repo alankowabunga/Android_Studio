@@ -23,7 +23,7 @@ public class Game {
 
 
 
-    // 可重複亂數
+    // 生成: 可重複亂數
     String repeatableAnswer() {
 
         answer = "";
@@ -35,7 +35,7 @@ public class Game {
         return answer;
     }
 
-    // 不可重複亂數
+    // 生成: 不可重複亂數
     String nonRepeatAnswer() {
 
         Random rand = new Random();
@@ -56,8 +56,8 @@ public class Game {
         return answer;
     }
 
-    // 對比答案
-    String checkAnswer(String guess) {
+    // 檢查不重複的答案
+    String checkNonRepeatedAnswer(String guess) {
         int a = 0, b = 0, c = 0;
         boolean[] answerUsed = {false, false, false, false};
         boolean[] guessUsed = {false, false, false, false};
@@ -104,12 +104,64 @@ public class Game {
             win = true;
         }
         return result;
-
     }
+
+    // 檢查不重複的答案
+    String checkRepeatedAnswer(String guess) {
+        int a = 0, b = 0, c = 0;
+        boolean[] answerUsed = {false, false, false, false};
+        boolean[] guessUsed = {false, false, false, false};
+        // 計算 a
+        for (int i = 0; i < 4; i++) {
+            if (guess.charAt(i) == answer.charAt(i)) {
+                answerUsed[i] = true;
+                guessUsed[i] = true;
+                a++;
+            }
+            System.out.println();
+        }
+        // 計算 b
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (!guessUsed[i] && !answerUsed[j] && guess.charAt(i) == answer.charAt(j)) {
+                    answerUsed[j] = true;
+                    guessUsed[i] = true;
+                    b++;
+                    break;
+                }
+            }
+        }
+        // 計算 c
+        Map<Character, Integer> charCount = new HashMap<>();
+        char[] charList = answer.toCharArray();
+        for (char ch : charList) {
+            if (!charCount.containsKey(ch)) {
+                charCount.put(ch, 1);
+            } else {
+                charCount.put(ch, charCount.get(ch) + 1);
+            }
+        }
+        for (int i : charCount.values()) {
+            if (i > 1) {
+                c++;
+
+            }
+        }
+
+        //輸出結果
+        String result = a + "A" + b + "B" + c + "C";
+        if (a == 4) {
+            win = true;
+        }
+        return result;
+    }
+
+
+    // 使用者輸入重複字符的數量
     Integer getC(String guess){
         int repeated=0;
         Map<Character, Integer> charCount = new HashMap<>();
-        char[] charList = answer.toCharArray();
+        char[] charList = guess.toCharArray();
         for (char ch : charList) {
             if (!charCount.containsKey(ch)) {
                 charCount.put(ch, 1);
