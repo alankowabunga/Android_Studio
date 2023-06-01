@@ -57,15 +57,15 @@ public class MainActivity extends AppCompatActivity {
             Double result = bundle.getDouble("RESULT");
             return result.toString();
         }
-    }
 //第二階段: Register Contract，建立 ActivityResultLauncher物件 launcher，來註冊 ResultContract 的回撥方法 onActivityResult()。
+    }
     ActivityResultLauncher launcher = registerForActivityResult(new ResultContract(), new ActivityResultCallback<String>() {
     @Override
     // onActivityResult 就是回撥方法，參數 result 就是活動的回傳值，取得後顯示結果。2
     public void onActivityResult(String result) {
         output.setText(("計算結果:"+result));
     }
-});
+    });
 
     // 按鈕會執行目標的活動: 呼叫 ActivityResultLauncher 物件的 launch()方法。
     public void button_click(View view) {

@@ -1,10 +1,16 @@
 package com.example.Mid_Term_2;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.Menu;
@@ -22,6 +28,7 @@ import com.example.midtern2.R;
 
 public class MainActivity extends AppCompatActivity {
     // 先宣告 View 的變數
+    TextView title;
     Button submitButton;
     Button restartButton;
     EditText inputNumber;
@@ -38,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
     boolean correct_input = true;
     final Game game = new Game();
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // 找到畫面中的 View
+        title = (TextView) findViewById(R.id.title);
         submitButton = (Button) findViewById(R.id.submitButton);
         restartButton = (Button) findViewById(R.id.restartButton);
         // 輸入的元件、字符序列 editable 、 長度
@@ -147,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private void generateAnswer() {
         if (flag_easy) {
             game.nonRepeatAnswer();
@@ -181,4 +191,36 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    class ResultContract extends ActivityResultContract<Boolean, String> {
+
+        @NonNull
+        @Override
+        public Intent createIntent(@NonNull Context context, Boolean aBoolean) {
+
+            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+
+            return intent;
+        }
+
+        @Override
+        public String parseResult(int i, @Nullable Intent intent) {
+
+            Bundle bundle = intent.getExtras();
+            String nickname = bundle.getString("RESULT");
+            return nickname;
+        }
+    }
+
+    //        Register Contract
+    ActivityResultLauncher launcher = registerForActivityResult(new ResultContract(), new ActivityResultCallback<String>() {
+        @Override
+        public void onActivityResult(String name) {
+            title.setText(name);
+        }
+    });
+
+    public void click_setName(View view) {
+        launcher.launch(true);
+    }
 }
